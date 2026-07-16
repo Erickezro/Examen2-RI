@@ -25,6 +25,19 @@ def rag_pipeline(query, top_k=5):
         .head(top_k)
     )
 
+    # Validación de relevancia
+    if (
+        retrieved["score"].max() < 0.50
+        or
+        retrieved["rerank_score"].max() < -5
+    ):
+        respuesta = (
+            "The available documents do not contain enough information "
+            "to answer this question."
+        )
+
+        return respuesta, None
+
 
     contexto = "\n\n".join(
         row["document"]

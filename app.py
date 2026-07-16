@@ -4,7 +4,7 @@ from src.rag_pipeline import rag_pipeline
 
 
 st.title(
-    "🔬 Scientific RAG Assistant"
+    "🔎 Scientific RAG Assistant"
 )
 
 
@@ -31,19 +31,13 @@ if st.button("Generate"):
             respuesta
         )
 
+        if documentos is not None:
 
-        st.subheader(
-            "Retrieved evidence"
-        )
+            st.subheader("Retrieved evidence")
 
-
-        for _, row in documentos.iterrows():
-
-            st.write(
-                row["titles"]
-            )
-
-            st.caption(
-                f"Similarity: {row['score']:.3f} | "
-                f"Rerank: {row['rerank_score']:.3f}"
-            )
+            for _, row in documentos.iterrows():
+                st.write(row["titles"])
+                st.write(
+                    f"Similarity: {row['score']:.3f} | "
+                    f"Rerank: {row['rerank_score']:.3f}"
+                )
